@@ -50,6 +50,71 @@ namespace CarInsurance.Controllers
         {
             if (ModelState.IsValid)
             {
+                int fQuote = Convert.ToInt32(insuree.Quote);
+                fQuote = 50;
+
+                var today = DateTime.Today;
+                var age = today.Year - insuree.DateOfBirth.Year;
+                if (insuree.DateOfBirth > today.AddYears(-25))
+                {
+                    fQuote = fQuote + 25;
+                }
+                else if (insuree.DateOfBirth > today.AddYears(-18))
+                {
+                    fQuote = fQuote + 100;
+                }
+
+            
+                else if (insuree.DateOfBirth > today.AddYears(-100))
+                {
+                    fQuote = fQuote + 25;
+                }
+
+
+                if (insuree.CarYear < 2000)
+                {
+                    fQuote = fQuote + 25;
+                }
+                else if (insuree.CarYear > 2015)
+                {
+                    fQuote = fQuote + 25;
+                }
+
+                if (insuree.CarMake == "Porsche")
+                {
+                    fQuote = fQuote + 25;
+                }
+
+                if (insuree.CarMake == "Porsche" && insuree.CarModel == "911 Carrera")
+                {
+                    fQuote = fQuote + 25;
+                }
+
+                if (insuree.SpeedingTickets > 0)
+                {
+                    fQuote = fQuote + (insuree.SpeedingTickets * 10);
+                }
+
+                if (insuree.DUI == true)
+                {
+                    fQuote = fQuote + (fQuote * 25 / 100);
+                }
+                else
+                {
+                    fQuote = fQuote + 0;
+                }
+
+                if (insuree.CoverageType == true)
+                {
+                    fQuote = fQuote + (fQuote * 50 / 100);
+                }
+                else
+                {
+                    fQuote = fQuote + 0;
+                }
+
+
+
                 db.Insurees.Add(insuree);
                 db.SaveChanges();
                 return RedirectToAction("Index");
