@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using CarInsurance.Models;
@@ -113,7 +114,9 @@ namespace CarInsurance.Controllers
                     fQuote = fQuote + 0;
                 }
 
-
+                //StringBuilder sbTotal = new StringBuilder();
+                //sbTotal.Append("Your quote is $" + fQuote);
+                //return Content(sbTotal.ToString());
 
                 db.Insurees.Add(insuree);
                 db.SaveChanges();
