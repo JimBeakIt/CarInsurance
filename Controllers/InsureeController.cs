@@ -51,76 +51,79 @@ namespace CarInsurance.Controllers
         {
             if (ModelState.IsValid)
             {
-                int fQuote = Convert.ToInt32(insuree.Quote);
-                fQuote = 50;
+
+                insuree.Quote = 50;
 
                 var today = DateTime.Today;
                 var age = today.Year - insuree.DateOfBirth.Year;
-                if (insuree.DateOfBirth > today.AddYears(-25))
+                if (insuree.DateOfBirth > today.AddYears(-18))
                 {
-                    fQuote = fQuote + 25;
+                    insuree.Quote = insuree.Quote + 100;
                 }
-                else if (insuree.DateOfBirth > today.AddYears(-18))
+                else if (insuree.DateOfBirth > today.AddYears(-25))
                 {
-                    fQuote = fQuote + 100;
-                }
-
-            
-                else if (insuree.DateOfBirth > today.AddYears(-100))
-                {
-                    fQuote = fQuote + 25;
+                    insuree.Quote = insuree.Quote + 50;
                 }
 
+                else if (insuree.DateOfBirth > today.AddYears(26))
+                {
+                    insuree.Quote = insuree.Quote + 25;
+                }
 
                 if (insuree.CarYear < 2000)
                 {
-                    fQuote = fQuote + 25;
+                    insuree.Quote = insuree.Quote + 25;
                 }
                 else if (insuree.CarYear > 2015)
                 {
-                    fQuote = fQuote + 25;
+                    insuree.Quote = insuree.Quote + 25;
                 }
 
                 if (insuree.CarMake == "Porsche")
                 {
-                    fQuote = fQuote + 25;
+                    insuree.Quote = insuree.Quote + 25;
                 }
 
                 if (insuree.CarMake == "Porsche" && insuree.CarModel == "911 Carrera")
                 {
-                    fQuote = fQuote + 25;
+                    insuree.Quote = insuree.Quote + 25;
                 }
 
                 if (insuree.SpeedingTickets > 0)
                 {
-                    fQuote = fQuote + (insuree.SpeedingTickets * 10);
+                    insuree.Quote = insuree.Quote + (insuree.SpeedingTickets * 10);
                 }
 
                 if (insuree.DUI == true)
                 {
-                    fQuote = fQuote + (fQuote * 25 / 100);
+                    insuree.Quote = insuree.Quote + (insuree.Quote * 25 / 100);
                 }
                 else
                 {
-                    fQuote = fQuote + 0;
+                    insuree.Quote = insuree.Quote + 0;
                 }
 
                 if (insuree.CoverageType == true)
                 {
-                    fQuote = fQuote + (fQuote * 50 / 100);
+                    insuree.Quote = insuree.Quote + (insuree.Quote * 50 / 100);
                 }
                 else
                 {
-                    fQuote = fQuote + 0;
+                    insuree.Quote = insuree.Quote + 0;
                 }
+
+                
+                db.Insurees.Add(insuree);
+                db.SaveChanges();
+                return RedirectToAction("Index");
 
                 //StringBuilder sbTotal = new StringBuilder();
                 //sbTotal.Append("Your quote is $" + fQuote);
                 //return Content(sbTotal.ToString());
+                //return RedirectToAction("Index");
 
-                db.Insurees.Add(insuree);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+
+
             }
 
             return View(insuree);
