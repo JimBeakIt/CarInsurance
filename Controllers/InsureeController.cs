@@ -16,6 +16,12 @@ namespace CarInsurance.Controllers
         private InsuranceEntities db = new InsuranceEntities();
 
         // GET: Insuree
+        public ActionResult Admin()
+        {
+            return View(db.Insurees.ToList());
+        }
+
+        // GET: Insuree
         public ActionResult Index()
         {
             return View(db.Insurees.ToList());
